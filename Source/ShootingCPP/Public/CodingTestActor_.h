@@ -38,5 +38,6 @@ public:
 	UPROPERTY(EditDefaultsOnly)//블프 설정에서만 수정가능
 	bool isReady = false;
 
-	int32 Add(int32 a, int32 b);
+	UFUNCTION(BlueprintCallable)//블프에서 함수 호출가능
+	int32 AddCustom(int32 a, int32 b);
 };
