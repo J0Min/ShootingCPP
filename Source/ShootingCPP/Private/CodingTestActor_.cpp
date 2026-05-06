@@ -21,6 +21,7 @@ void ACodingTestActor_::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("%.2f"),num2);
 	UE_LOG(LogTemp, Warning, TEXT("%s"),*name);
 	UE_LOG(LogTemp, Warning, TEXT("%d"),isReady);
+	UE_LOG(LogTemp, Warning, TEXT("%d"),Add(num3,num4));
 }
 
 // Called every frame
@@ -30,3 +31,7 @@ void ACodingTestActor_::Tick(float DeltaTime)
 
 }
 
+int32 ACodingTestActor_::Add(int32 a, int32 b)
+{
+	return a + b;
+}
