@@ -31,4 +31,19 @@ public:
 	
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* meshComp;
+	
+	//IMC 파일의 포인터 함수
+	UPROPERTY(EditAnywhere)
+	class UInputMappingContext* imcPlayerInput;
+	
+	UPROPERTY(EditAnywhere)
+	class UInputAction* iaHorizontal;
+	UPROPERTY(EditAnywhere)
+	class UInputAction* iaVertical;
+	
+private:
+	float h, v;
+	
+	void OnInputHorizontal(const struct FInputActionValue& value);
+	void OnInputVertical(const struct FInputActionValue& value);
 };

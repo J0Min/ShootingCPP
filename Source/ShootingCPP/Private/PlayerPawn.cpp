@@ -3,6 +3,7 @@
 
 #include "PlayerPawn.h"
 
+#include "EnhancedInputSubsystems.h"
 #include "Components/BoxComponent.h"
 
 
@@ -30,6 +31,15 @@ void APlayerPawn::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	//컨트롤러
+	APlayerController* pc = GetWorld()->GetFirstPlayerController();
+	if (pc != nullptr)
+	{
+		UEnhancedInputLocalPlayerSubsystem* subsys = 
+			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(pc->GetLocalPlayer());
+		if (subsys != nullptr){}
+		subsys->AddMappingContext(imcPlayerInput, 0);
+	}
 }
 
 // Called every frame
