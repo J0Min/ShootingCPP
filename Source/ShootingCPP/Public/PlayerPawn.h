@@ -40,12 +40,23 @@ public:
 	class UInputAction* iaHorizontal;
 	UPROPERTY(EditAnywhere)
 	class UInputAction* iaVertical;
+	UPROPERTY(EditAnywhere)
+	class UInputAction* iaFire;
 	
 	UPROPERTY(EditAnywhere)
 	float movespeed = 500.f;
+	
+	//총구(총알 발사 위치)
+	UPROPERTY(EditAnywhere)
+	class UArrowComponent* firePosition;
+	//생성할 총알 BP
+	//원본 파일을 변수에 할당을 위한 TSubclassOf 타입 사용
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class ABullet> bulletFactory;
 private:
 	float h, v;
 	
 	void OnInputHorizontal(const struct FInputActionValue& value);
 	void OnInputVertical(const struct FInputActionValue& value);
+	void Fire();
 };

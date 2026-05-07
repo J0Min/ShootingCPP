@@ -3,8 +3,10 @@
 
 #include "PlayerPawn.h"
 
+#include "Bullet.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
 
 
@@ -25,6 +27,10 @@ APlayerPawn::APlayerPawn()
 	//콜리전 박스 크기 조절
 	FVector boxsize = FVector(50.f, 50.f, 50.f);
 	boxComp->SetBoxExtent(boxsize);
+	
+	//총구 컴포넌트 생성 및 계층 구조 정리
+	firePosition = CreateDefaultSubobject<UArrowComponent>(TEXT("Fire Component"));
+	firePosition->SetupAttachment(boxComp);
 }
 
 // Called when the game starts or when spawned
@@ -66,6 +72,8 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 		eic->BindAction(iaHorizontal, ETriggerEvent::Completed, this, &APlayerPawn::OnInputHorizontal);
 		eic->BindAction(iaVertical, ETriggerEvent::Triggered, this, &APlayerPawn::OnInputVertical);
 		eic->BindAction(iaVertical, ETriggerEvent::Completed, this, &APlayerPawn::OnInputVertical);
+		
+		eic->BindAction(iaFire, ETriggerEvent::Started, this, &APlayerPawn::Fire);
 	}
 }
 
@@ -80,3 +88,8 @@ void APlayerPawn::OnInputVertical(const struct FInputActionValue& value)
 	v = value.Get<float>();
 }
 
+void APlayerPawn::Fire()
+{
+	ABullet* Bullet = GetWorld()->SpawnActor<ABullet>(bulletFactory,
+		firePosition->GetComponentLocation(), firePosition->GetComponentRotation());
+}
