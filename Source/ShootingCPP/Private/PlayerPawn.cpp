@@ -47,6 +47,11 @@ void APlayerPawn::BeginPlay()
 void APlayerPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	FVector dir = FVector(0,h,v);
+	dir.Normalize();//정규화
+	FVector newLocation = GetActorLocation() + dir * movespeed * DeltaTime;
+	SetActorLocation(newLocation);
 }
 
 // Called to bind functionality to input
@@ -62,5 +67,16 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 		eic->BindAction(iaVertical, ETriggerEvent::Triggered, this, &APlayerPawn::OnInputVertical);
 		eic->BindAction(iaVertical, ETriggerEvent::Completed, this, &APlayerPawn::OnInputVertical);
 	}
+}
+
+//사용자가 키를 누르면 홏풀되어, 변수를 재할당 하는 함수
+void APlayerPawn::OnInputHorizontal(const struct FInputActionValue& value)
+{
+	h = value.Get<float>();
+}
+
+void APlayerPawn::OnInputVertical(const struct FInputActionValue& value)
+{
+	v = value.Get<float>();
 }
 
