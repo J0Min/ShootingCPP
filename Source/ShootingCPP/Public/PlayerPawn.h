@@ -53,6 +53,8 @@ public:
 	//원본 파일을 변수에 할당을 위한 TSubclassOf 타입 사용
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class ABullet> bulletFactory;
+	UPROPERTY(EditAnywhere)
+	class USoundBase* fireSound;
 private:
 	float h, v;
 	
