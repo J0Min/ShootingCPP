@@ -28,4 +28,7 @@ public:
 	
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* meshComp;
+	
+	UPROPERTY(EditAnywhere)
+	float moveSpeed = 800.f;
 };

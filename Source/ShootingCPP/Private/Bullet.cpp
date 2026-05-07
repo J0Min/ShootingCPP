@@ -37,5 +37,11 @@ void ABullet::BeginPlay()
 void ABullet::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	//전방 이동을 위한 위치 계산
+	//지금 위치에서 전방벡터*속도(크기)*델타타임으로 이동 위치 계산
+	FVector newLocation = GetActorLocation() + GetActorForwardVector() * moveSpeed * DeltaTime;
+	//액터 위치 설정
+	SetActorLocation(newLocation);
 }
 
