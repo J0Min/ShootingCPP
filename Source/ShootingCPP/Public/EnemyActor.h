@@ -28,4 +28,13 @@ public:
 	
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* meshComp;
+	
+	UPROPERTY(EditAnywhere)
+	float moveSpeed = 600.f;
+	//추적 확률
+	UPROPERTY(EditAnywhere)
+	int32 traceRate = 50;
+	
+private:
+	FVector dir;
 };
