@@ -19,6 +19,10 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UMainWidget> mainWidget;
 	
+	void ShowMenu();
+	
+	class UMainWidget* menuWidget;
+	class UMainWidget* menuUI;
 protected:
 	//위젯은	게임 시작 할때 생성되어야 하므로, beginplay를 오버라이드
 	virtual void BeginPlay() override;

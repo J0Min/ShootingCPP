@@ -18,5 +18,12 @@ class SHOOTINGCPP_API UMenuWidget : public UUserWidget
 	class UButton* buttonRestart;
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UButton* buttonQuit;
-	
+protected:
+	//위젯 초기화 함수
+	virtual void NativeConstruct() override;
+private:
+	UFUNCTION()
+	void Restart();
+	UFUNCTION()
+	void Quit();
 };
