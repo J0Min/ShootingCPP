@@ -37,6 +37,10 @@ public:
 	void OnBulletOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
+	//구버전 kismet
+	//UPROPERTY(EditAnywhere)
+	//class UParticleSystem* explosionFX;
+	
 	UPROPERTY(EditAnywhere)
-	class UParticleSystem* expostionFX;
+	class UNiagaraSystem* explosionFX;
 };
