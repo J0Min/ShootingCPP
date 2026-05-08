@@ -24,6 +24,9 @@ ABullet::ABullet()
 	//외형 메쉬컴포넌트 생성후 박스 컴포넌트에 상속
 	meshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("My StaticMesh Component"));
 	meshComp->SetupAttachment(boxComp);
+	
+	//에디터에서 생성할 프리셋 이름을 컴포넌트에 세팅
+	boxComp->SetCollisionProfileName(TEXT("Bullet"));
 }
 
 // Called when the game starts or when spawned

@@ -31,6 +31,19 @@ APlayerPawn::APlayerPawn()
 	//총구 컴포넌트 생성 및 계층 구조 정리
 	firePosition = CreateDefaultSubobject<UArrowComponent>(TEXT("Fire Component"));
 	firePosition->SetupAttachment(boxComp);
+	
+	/*
+	//충돌 채널으 cpp에서 직접 설정
+	//코드 가독성 감소
+	//충돌 설정은 채널/응답 조합이 복잡해질 가능성이 높아, 언리얼 에디터 프리셋을 통환 관리가 유리
+	boxComp->SetCollisionObjectType(ECollisionChannel::ECC_GameTraceChannel1);//player
+	boxComp->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	boxComp->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+	boxComp->SetCollisionResponseToChannel(ECollisionChannel::ECC_GameTraceChannel2, ECollisionResponse::ECR_Ignore);//Enemy
+	*/
+	
+	//에디터에서 생성할 프리셋 이름을 컴포넌트에 세팅
+	boxComp->SetCollisionProfileName(TEXT("Player"));
 }
 
 // Called when the game starts or when spawned
