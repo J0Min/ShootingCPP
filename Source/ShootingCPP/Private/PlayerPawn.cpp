@@ -4,6 +4,7 @@
 #include "PlayerPawn.h"
 
 #include "Bullet.h"
+#include "EnemyActor.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Components/ArrowComponent.h"
@@ -57,9 +58,15 @@ void APlayerPawn::BeginPlay()
 	{
 		UEnhancedInputLocalPlayerSubsystem* subsys = 
 			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(pc->GetLocalPlayer());
-		if (subsys != nullptr){}
-		subsys->AddMappingContext(imcPlayerInput, 0);
+		if (subsys != nullptr)
+		{
+			subsys->AddMappingContext(imcPlayerInput, 0);
+		}
+		
 	}
+	
+	//overlap 발생시 등록한 함수를 호출하라고 엔진에 사전 등록
+	boxComp->OnComponentBeginOverlap.AddDynamic(this, &APlayerPawn::OnPlayerOverlap);
 }
 
 // Called every frame
@@ -103,8 +110,23 @@ void APlayerPawn::OnInputVertical(const struct FInputActionValue& value)
 
 void APlayerPawn::Fire()
 {
+	UE_LOG(LogTemp, Warning, TEXT("Fire"));
 	ABullet* Bullet = GetWorld()->SpawnActor<ABullet>(bulletFactory,
 		firePosition->GetComponentLocation(), firePosition->GetComponentRotation());
 	
 	UGameplayStatics::PlaySound2D(GetWorld(),fireSound);
+}
+
+void APlayerPawn::OnPlayerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	//충돌한 상대 액터를 Enemy로 형변환하여 소멸 진행
+	AEnemyActor* enemy = Cast<AEnemyActor>(OtherActor);
+	if (enemy != nullptr)
+	{
+		OtherActor->Destroy();
+		this->Destroy();
+	}
+	//자신도 소멸
+	
 }

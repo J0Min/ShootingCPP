@@ -3,6 +3,7 @@
 
 #include "EnemyActor.h"
 
+#include "Bullet.h"
 #include "EngineUtils.h"
 #include "PlayerPawn.h"
 #include "Components/BoxComponent.h"
@@ -52,6 +53,9 @@ void AEnemyActor::BeginPlay()
 	{
 		dir = GetActorForwardVector();
 	}
+	
+	//overlap 발생시 등록한 함수를 호출하라고 엔진에 사전 등록
+	boxComp->OnComponentBeginOverlap.AddDynamic(this, &AEnemyActor::OnEnemyOverlap);
 }
 
 // Called every frame
@@ -61,5 +65,18 @@ void AEnemyActor::Tick(float DeltaTime)
 	
 	FVector newLocation = GetActorLocation() + dir * moveSpeed * DeltaTime;
 	SetActorLocation(newLocation);
+}
+
+void AEnemyActor::OnEnemyOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	//충돌한 상대 액터를 Enemy로 형변환하여 소멸 진행
+	APlayerPawn* player = Cast<APlayerPawn>(OtherActor);
+	if (player != nullptr)
+	{
+		OtherActor->Destroy();
+	}
+	//자신도 소멸
+	this->Destroy();
 }
 
