@@ -76,8 +76,10 @@ void APlayerPawn::Tick(float DeltaTime)
 	
 	FVector dir = FVector(0,h,v);
 	dir.Normalize();//정규화
-	FVector newLocation = GetActorLocation() + dir * movespeed * DeltaTime;
-	SetActorLocation(newLocation);
+	FVector vector = dir * movespeed * DeltaTime;
+	//한쪽이 막혀도 이동 가능하게 처리
+	SetActorLocation(GetActorLocation() + FVector(0,vector.Y,0),true);
+	SetActorLocation(GetActorLocation() + FVector(0,0,vector.Z),true);
 }
 
 // Called to bind functionality to input

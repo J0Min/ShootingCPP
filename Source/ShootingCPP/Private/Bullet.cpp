@@ -5,6 +5,7 @@
 
 #include "EnemyActor.h"
 #include "NiagaraFunctionLibrary.h"
+#include "ShootingGameModeBase.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -66,6 +67,14 @@ void ABullet::OnBulletOverlap(UPrimitiveComponent* OverlappedComponent, AActor* 
 		//UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosionFX, GetActorTransform());
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), explosionFX, GetActorLocation());
 		OtherActor->Destroy();
+		
+		//현재 게임 모드 가져오기
+		AGameModeBase* currentGameMode = GetWorld()->GetAuthGameMode();
+		AShootingGameModeBase* currenGameModeBase = Cast<AShootingGameModeBase>(currentGameMode);
+		if (currenGameModeBase != nullptr)
+		{
+			currenGameModeBase->AddScore(1);
+		}
 	}
 	//자신도 소멸
 	this->Destroy();

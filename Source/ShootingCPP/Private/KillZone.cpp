@@ -2,34 +2,44 @@
 
 
 #include "KillZone.h"
+#include "Components/BoxComponent.h"
 
 
-// Sets default values for this component's properties
-UKillZone::UKillZone()
+// Sets default values
+AKillZone::AKillZone()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	//Tick이 필요없는 액터는 항상 false로 설정
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = false;
+	
+	//박스 콜리전 컴포넌트 생성 및 최상단 컴포넌트로 설정
+	boxComp = CreateDefaultSubobject<UBoxComponent>(TEXT("My Box Component"));
+	SetRootComponent(boxComp);
+	//콜리전 박스 크기 조절
+	FVector boxsize = FVector(50.f, 2000.f, 50.f);
+	boxComp->SetBoxExtent(boxsize);
+	//박스 모빌리티 고정
+	boxComp->SetMobility(EComponentMobility::Static);
+	
+	boxComp->SetCollisionProfileName(TEXT("KillZone"));
 
-	// ...
 }
 
-
-// Called when the game starts
-void UKillZone::BeginPlay()
+// Called when the game starts or when spawned
+void AKillZone::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
 	
+	boxComp->OnComponentBeginOverlap.AddDynamic(this, &AKillZone::OnKillZoneOverlap);
 }
 
-
-// Called every frame
-void UKillZone::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void AKillZone::OnKillZoneOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
+	// 충돌 오버랩 발생한 액터 제거
+	if (OtherActor)
+	{
+		OtherActor->Destroy();
+	}
 }
 
