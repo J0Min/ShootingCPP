@@ -66,7 +66,7 @@ void APlayerPawn::BeginPlay()
 	}
 	
 	//overlap 발생시 등록한 함수를 호출하라고 엔진에 사전 등록
-	boxComp->OnComponentBeginOverlap.AddDynamic(this, &APlayerPawn::OnPlayerOverlap);
+	//boxComp->OnComponentBeginOverlap.AddDynamic(this, &APlayerPawn::OnPlayerOverlap);
 }
 
 // Called every frame
@@ -119,16 +119,16 @@ void APlayerPawn::Fire()
 	UGameplayStatics::PlaySound2D(GetWorld(),fireSound);
 }
 
-void APlayerPawn::OnPlayerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	//충돌한 상대 액터를 Enemy로 형변환하여 소멸 진행
-	AEnemyActor* enemy = Cast<AEnemyActor>(OtherActor);
-	if (enemy != nullptr)
-	{
-		OtherActor->Destroy();
-		this->Destroy();
-	}
-	//자신도 소멸
-	
-}
+// void APlayerPawn::OnPlayerOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+// 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+// {
+// 	//충돌한 상대 액터를 Enemy로 형변환하여 소멸 진행
+// 	AEnemyActor* enemy = Cast<AEnemyActor>(OtherActor);
+// 	if (enemy != nullptr)
+// 	{
+// 		OtherActor->Destroy();
+// 		this->Destroy();
+// 	}
+// 	//자신도 소멸
+// 	
+// }

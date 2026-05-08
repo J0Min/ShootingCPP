@@ -12,7 +12,7 @@ void UMenuWidget::NativeConstruct()
 	
 	//각 버튼 클릭 이벤트에 대응 함수 연결
 	buttonRestart->OnClicked.AddDynamic( this, &UMenuWidget::Restart);
-	buttonRestart->OnClicked.AddDynamic( this, &UMenuWidget::Quit);
+	buttonQuit->OnClicked.AddDynamic( this, &UMenuWidget::Quit);
 }
 
 void UMenuWidget::Restart()

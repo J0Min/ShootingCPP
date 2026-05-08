@@ -84,6 +84,6 @@ void AEnemyActor::OnEnemyOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 		}
 	}
 	//자신도 소멸
-	this->Destroy();
+	Destroy();
 }
 

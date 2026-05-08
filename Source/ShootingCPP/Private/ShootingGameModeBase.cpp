@@ -37,16 +37,34 @@ void AShootingGameModeBase::PrintScore()
 }
 
 //게임 오버 메뉴 위젯 출력 함수
+// void AShootingGameModeBase::ShowMenu()
+// {
+// 	if (menuWidget != nullptr)
+// 	{
+// 		menuUI = CreateWidget<UMenuWidget>(GetWorld(),menuWidget);
+// 		if (menuUI != nullptr)
+// 		{
+// 			menuUI->AddToViewport();
+// 			//메뉴 등장시 게임 일시 정지
+// 			UGameplayStatics::SetGamePaused(GetWorld(),true);
+// 			GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
+// 		}
+// 	}
+// }
+
 void AShootingGameModeBase::ShowMenu()
 {
 	if (menuWidget != nullptr)
 	{
-		menuUI = CreateWidget<UMenuWidget>(GetWorld(),menuWidget);
+		// 메뉴 위젯 생성
+		menuUI = CreateWidget<UMenuWidget>(GetWorld(), menuWidget);
+		
 		if (menuUI != nullptr)
 		{
 			menuUI->AddToViewport();
-			//메뉴 등장시 게임 일시 정지
-			UGameplayStatics::SetGamePaused(GetWorld(),true);
+			// 메뉴 등장 시, 게임 일시 정지
+			UGameplayStatics::SetGamePaused(GetWorld(), true);
+			// 컨트롤러에서 마우스 커서 보이게 하기
 			GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
 		}
 	}
